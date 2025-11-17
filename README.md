@@ -6,5 +6,6 @@
 - [x] Create react base project inside client folder
 - [x] Add resources
 - [x] Copy html from template index.html into App.jsx (convert to jsx)
+- [ ] Extract home page components
 - [ ] Add react router
 - [ ] 
