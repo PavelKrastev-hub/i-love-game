@@ -1,10 +1,11 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('http'), require('fs'), require('crypto')) :
-    typeof define === 'function' && define.amd ? define(['http', 'fs', 'crypto'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Server = factory(global.http, global.fs, global.crypto));
-}(this, (function (http, fs, crypto) { 'use strict';
+        typeof define === 'function' && define.amd ? define(['http', 'fs', 'crypto'], factory) :
+            (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Server = factory(global.http, global.fs, global.crypto));
+}(this, (function (http, fs, crypto) {
+    'use strict';
 
-    function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+    function _interopDefaultLegacy(e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
     var http__default = /*#__PURE__*/_interopDefaultLegacy(http);
     var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
@@ -13,14 +14,14 @@
     class ServiceError extends Error {
         constructor(message = 'Service Error') {
             super(message);
-            this.name = 'ServiceError'; 
+            this.name = 'ServiceError';
         }
     }
 
     class NotFoundError extends ServiceError {
         constructor(message = 'Resource not found') {
             super(message);
-            this.name = 'NotFoundError'; 
+            this.name = 'NotFoundError';
             this.status = 404;
         }
     }
@@ -28,7 +29,7 @@
     class RequestError extends ServiceError {
         constructor(message = 'Request error') {
             super(message);
-            this.name = 'RequestError'; 
+            this.name = 'RequestError';
             this.status = 400;
         }
     }
@@ -36,7 +37,7 @@
     class ConflictError extends ServiceError {
         constructor(message = 'Resource conflict') {
             super(message);
-            this.name = 'ConflictError'; 
+            this.name = 'ConflictError';
             this.status = 409;
         }
     }
@@ -44,7 +45,7 @@
     class AuthorizationError extends ServiceError {
         constructor(message = 'Unauthorized') {
             super(message);
-            this.name = 'AuthorizationError'; 
+            this.name = 'AuthorizationError';
             this.status = 401;
         }
     }
@@ -52,7 +53,7 @@
     class CredentialError extends ServiceError {
         constructor(message = 'Forbidden') {
             super(message);
-            this.name = 'CredentialError'; 
+            this.name = 'CredentialError';
             this.status = 403;
         }
     }
@@ -93,7 +94,7 @@
             // NOTE: the OPTIONS method results in undefined result and also it never processes plugins - keep this in mind
             if (method == 'OPTIONS') {
                 Object.assign(headers, {
-                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS, PATCH',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Credentials': false,
                     'Access-Control-Max-Age': '86400',
                     'Access-Control-Allow-Headers': 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, X-Authorization, X-Admin'
@@ -520,7 +521,6 @@
         let responseData;
 
         try {
-            console.log(query.where);
             if (query.where) {
                 responseData = context.storage.get(context.params.collection).filter(parseWhere(query.where));
             } else if (context.params.collection) {
@@ -557,8 +557,8 @@
             if (query.pageSize) {
                 responseData = responseData.slice(0, pageSize);
             }
-    		
-    		if (query.distinct) {
+
+            if (query.distinct) {
                 const props = query.distinct.split(',').filter(p => p != '');
                 responseData = Object.values(responseData.reduce((distinct, c) => {
                     const key = props.map(p => c[p]).join('::');
@@ -794,7 +794,7 @@
     }
 
     function onRequest(context, tokens, query, body) {
-        Object.entries(body).forEach(([k,v]) => {
+        Object.entries(body).forEach(([k, v]) => {
             console.log(`${k} ${v ? 'enabled' : 'disabled'}`);
             context.util[k] = v;
         });
@@ -932,7 +932,7 @@
          * @param {Object} data Value to store. Shallow merge will be performed!
          * @return {Object} Updated entry.
          */
-         function merge(collection, id, data) {
+        function merge(collection, id, data) {
             if (!collections.has(collection)) {
                 throw new ReferenceError('Collection does not exist: ' + collection);
             }
@@ -1319,42 +1319,82 @@
 
     var identity = "email";
     var protectedData = {
-    	users: {
-    		"35c62d76-8152-4626-8712-eeb96381bea8": {
-    			email: "peter@abv.bg",
-    			username: "Peter",
-    			hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
-    		},
-    		"847ec027-f659-4086-8032-5173e2f9c93a": {
-    			email: "george@abv.bg",
-    			username: "George",
-    			hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
-    		},
-    		"60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
-    			email: "admin@abv.bg",
-    			username: "Admin",
-    			hashedPassword: "fac7060c3e17e6f151f247eacb2cd5ae80b8c36aedb8764e18a41bbdc16aa302"
-    		}
-    	},
-    	sessions: {
-    	}
+        users: {
+            "35c62d76-8152-4626-8712-eeb96381bea8": {
+                email: "peter@abv.bg",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "847ec027-f659-4086-8032-5173e2f9c93a": {
+                email: "john@abv.bg",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            }
+        },
+        sessions: {
+        }
     };
-    var seedData = {};
+    var seedData = {
+        
+        games: {
+           "5c7d8f0e-3a9b-4c2d-9e1f-6a4b3c8d2e7a": {
+            "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+            "title": "The Witcher 3",
+            "genre": "Open World",
+            "players": 32000,
+            "date": "2015-05-19",
+            "imageUrl": "/images/witcher.png",
+            "summary": "A story-driven, open world fantasy RPG. Play as Geralt of Rivia, a monster slayer for hire, who must find the Child of Prophecy in a vast, war-torn world. The game is known for its morally gray choices, mature storyline, and expansive world exploration.",
+            "_createdOn": 1617194350000
+        },
+        "7b9a2c4f-1d5e-4b6c-8a3d-2f1e0g3h4i5j": {
+            "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+            "title": "Elden Ring",
+            "genre": "Action RPG",
+            "players": 105000,
+            "date": "2022-02-25",
+            "imageUrl": "/images/elden ring.png",
+            "summary": "A monumental fantasy action RPG developed by FromSoftware and Bandai Namco. Set in the Lands Between, players embark on an epic quest to become the Elden Lord, exploring a vast open world designed by Hidetaka Miyazaki, with worldbuilding contributed by fantasy author George R. R. Martin.",
+            "_createdOn": 1645708800000
+        },
+        "3d4e5f6g-7h8i-9j0k-1l2m-3n4o5p6q7r8s": {
+            "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+            "title": "Minecraft",
+            "genre": "Sandbox",
+            "players": 1400000,
+            "date": "2011-11-18",
+            "imageUrl": "/images/minecraft.png",
+            "summary": "Minecraft is a sandbox video game where players explore a blocky, procedurally generated 3D world with infinite terrain. Players may discover and extract raw materials, craft tools and items, and build structures, earthworks and simple machines.",
+            "_createdOn": 1617194450000
+        },
+        "9f8e7d6c-5b4a-3c2d-1e0f-9g8h7i6j5k4l": {
+            "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+            "title": "Cyberpunk 2077",
+            "genre": "Action RPG",
+            "players": 85000,
+            "date": "2020-12-10",
+            "imageUrl": "/images/cyberpunk.png",
+            "summary": "An open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification. You play as V, a mercenary outlaw going after a one-of-a-kind implant that is the key to immortality.",
+            "_createdOn": 1607558400000
+            }
+        },
+        comments: {
+        
+        }
+    };
     var rules$1 = {
-    	users: {
-    		".create": false,
-    		".read": [
-    			"Owner"
-    		],
-    		".update": false,
-    		".delete": false
-    	},
+        users: {
+            ".create": false,
+            ".read": [
+                "Owner"
+            ],
+            ".update": false,
+            ".delete": false
+        }
     };
     var settings = {
-    	identity: identity,
-    	protectedData: protectedData,
-    	seedData: seedData,
-    	rules: rules$1
+        identity: identity,
+        protectedData: protectedData,
+        seedData: seedData,
+        rules: rules$1
     };
 
     const plugins = [
