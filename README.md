@@ -18,3 +18,4 @@
 
 ## Bonus
 - [x] Create game
+- [x] Add requester
