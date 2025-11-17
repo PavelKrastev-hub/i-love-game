@@ -15,3 +15,6 @@
 - [x] Dynamic home latest games
 - [x] Add details page
 - [x] Delete game
+
+## Bonus
+- [x] Create game
