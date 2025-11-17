@@ -12,7 +12,6 @@ export default function Home() {
                     .sort((a, b) => b._createdOn - a._createdOn)
                     .slice(0, 3);
 
-                console.log(resultGames);
                 setLatestGames(resultGames);
             });
     }, []);
