@@ -10,4 +10,5 @@
 - [x] Add react router
 - [x] Add BrowserRouter Component
 - [x] Add Routes
-- [ ] Dynamic navigation
+- [x] Dynamic navigation
+- [x] Create dynamic catalog
