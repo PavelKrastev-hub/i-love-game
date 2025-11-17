@@ -13,4 +13,5 @@
 - [x] Dynamic navigation
 - [x] Create dynamic catalog
 - [x] Dynamic home latest games
-- [ ] Add details page
+- [x] Add details page
+- [x] Delete game
