@@ -6,6 +6,7 @@ import Catalog from "./components/catalog/Catalog.jsx"
 import Details from "./components/details/Details.jsx"
 import GameCreate from "./components/game-create/GameCreate.jsx"
 import Login from "./components/login/Login.jsx"
+import Register from "./components/register/Register.jsx"
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/games/:gameId/details" element={<Details />} />
                 <Route path="/games/create" element={<GameCreate />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
 
             <Footer />
