@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router"
-import Header from "./components/Header.jsx"
+import Header from "./components/header/Header.jsx"
 import Footer from "./components/footer/Footer.jsx"
 import Home from "./components/home/Home.jsx"
 import Catalog from "./components/catalog/Catalog.jsx"
