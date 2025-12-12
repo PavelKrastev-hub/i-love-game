@@ -1,68 +1,72 @@
 import { useNavigate } from "react-router";
 import request from "../../utils/request.js";
+import { useState } from "react";
 
 export default function GameCreate() {
     const navigate = useNavigate();
+    const [data, setData] = useState({
+        title: '',
+        genre: '',
+        players: '',
+        date: '',
+        imageUrl: '',
+        summary: '',
+    });
 
-    const createGameHandler = async (event) => {
-        event.preventDefault();
+    const changeHandler = (e) => {
+        setData((state) => ({
+            ...state,
+            [e.target.name]: e.target.value,
+        }));
+    }
 
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData);
+    const submitHandler = (e) => {
+        e.preventDefault();
 
-        data.players = Number(data.players);
-        data._createdOn = Date.now();
+        try {
+            request('http://localhost:3030/jsonstore/games', 'POST', { ...data });
 
-        // const response = await fetch('http://localhost:3030/jsonstore/games', {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json',
-        //     },
-        //     body: JSON.stringify(data),
-        // });
-
-        // const result = await response.json();
-
-        await request('http://localhost:3030/jsonstore/games', 'POST', data);
-
-        navigate('/games');
+            navigate('/games');
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
     return (
         <section id="add-page">
-            <form id="add-new-game" onSubmit={createGameHandler}>
+            <form id="add-new-game" onSubmit={submitHandler}>
                 <div className="container">
 
                     <h1>Add New Game</h1>
 
                     <div className="form-group-half">
                         <label htmlFor="gameName">Game Name:</label>
-                        <input type="text" id="gameName" name="title" placeholder="Enter game title..." />
+                        <input type="text" value={data.title} onChange={changeHandler} id="gameName" name="title" placeholder="Enter game title..." />
                     </div>
 
                     <div className="form-group-half">
                         <label htmlFor="genre">Genre:</label>
-                        <input type="text" id="genre" name="genre" placeholder="Enter game genre..." />
+                        <input type="text" value={data.genre} onChange={changeHandler} id="genre" name="genre" placeholder="Enter game genre..." />
                     </div>
 
                     <div className="form-group-half">
                         <label htmlFor="activePlayers">Active Players:</label>
-                        <input type="number" id="activePlayers" name="players" min="0" placeholder="0" />
+                        <input type="number" value={data.players} onChange={changeHandler} id="activePlayers" name="players" min="0" placeholder="0" />
                     </div>
 
                     <div className="form-group-half">
                         <label htmlFor="releaseDate">Release Date:</label>
-                        <input type="date" id="releaseDate" name="date" />
+                        <input type="date" value={data.date} onChange={changeHandler} id="releaseDate" name="date" />
                     </div>
 
                     <div className="form-group-full">
                         <label htmlFor="imageUrl">Image URL:</label>
-                        <input type="text" id="imageUrl" name="imageUrl" placeholder="Enter image URL..." />
+                        <input type="text" value={data.imageUrl} onChange={changeHandler} id="imageUrl" name="imageUrl" placeholder="Enter image URL..." />
                     </div>
 
                     <div className="form-group-full">
                         <label htmlFor="summary">Summary:</label>
-                        <textarea name="summary" id="summary" rows="5" placeholder="Write a brief summary..."></textarea>
+                        <textarea name="summary" value={data.summary} onChange={changeHandler} id="summary" rows="5" placeholder="Write a brief summary..."></textarea>
                     </div>
 
                     <input className="btn submit" type="submit" value="ADD GAME" />
